@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Snake Game"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="snake.css">
+</head>
+<body>
+    <div class="game-snake" id="game-container">
+        <div class="playing-field">
+            <div class="field-bloc" id="snake-bloc"></div>
+            <canvas id="game-board" width="600" height="600"></canvas>
+        </div>
+
+        <div class="menu-field">
+            <h1>Snake Game</h1>
+
+            <div class="best-container">
+                <span class="best">Best:</span>
+                <span class="best-value" id="best-info">0</span>
+            </div>
+            <div class="score-container">
+                <span class="score">Score:</span>
+                <span class="score-value" id="score-info">0</span>
+            </div>
+
+            <div class="radio-button-dumpling" id="radio-button-dumpling"></div>
+            <div class="radio-button" id="radio-button">
+                <div>
+                    <input type="radio" id="radio-classic" name="contact" value="classic" checked />
+                    <label for="radio-classic">Classic</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="radio-no-die" name="contact" value="no_die" />
+                    <label for="radio-no-die">No Die</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="radio-walls" name="contact" value="walls" />
+                    <label for="radio-walls">Walls</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="radio-portal" name="contact" value="portal" />
+                    <label for="radio-portal">Portal</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="radio-speed" name="contact" value="speed" />
+                    <label for="radio-speed">Speed</label>
+                </div>
+            </div>
+
+            <div class="button-play-exit">
+                <button type="submit" id="play-button">Play</button>
+                <button type="submit" id="exit-button">Exit</button>
+            </div>
+            <div class="button-menu">
+                <button type="submit" id="menu-button">Menu</button>
+            </div>
+        </div>
+    </div>
+    <script src="snake.js"></script>
+</body>
+</html>

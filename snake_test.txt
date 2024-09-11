@@ -1,0 +1,25 @@
+
+Game Snake
+
+Conditions:
+
+- Use Pixi.js and vanilla javascript
+- Use arrow keys to control snake
+- Use OOP concepts
+- Game screen need to have game field and gui
+- Field size 20*20
+- GUI:
+	- Label "Best Score"
+	- Label "Current Score"
+	- When play game button "Menu"
+	- When no play game buttons "Play" and "Exit"
+	- Radio List with game modes
+	
+	
+Game Modes:
+
+- Classic( classic snake games )
+- No die( passes through self body and pass wall from the opposite side );
+- Walls( when snake eat food in random place, spawn one cell of wall );
+- Portal( at the same time on field have two cell of food. When snake eat one of them, she spawn in second food cell and save direction );
+- Speed( when snake eat food, she speed up on 10% );
