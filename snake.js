@@ -24,7 +24,9 @@ const wallsColorBrown = '#a96a0e';
 const wallsColorWhite = '#f4f2f4';
 const snakeColorHead = '#b8b926';
 const snakeColorBody = '#f4f2f4';
-const foodColor = '#27865d';
+const foodColorBranch = '#ED7D31';
+const foodColorLeaflet = '#27865d';
+const foodColorApple = '#FF0000';
 
 const cellSize = 30;
 const boardWidth = gameBoard.width - cellSize;
@@ -103,12 +105,46 @@ function drawSnake() {
     }
 }
 
+function drawApple(x, y) {
+    context.fillStyle = foodColorBranch;
+    context.fillRect(x + 11, y, 2, 1);
+    context.fillRect(x + 12, y + 1, 2, 1);
+    context.fillRect(x + 13, y + 2, 2, 1);
+    context.fillRect(x + 14, y + 3, 2, 5);
+    context.fillStyle = foodColorLeaflet;
+    context.fillRect(x + 19, y + 1, 3, 1);
+    context.fillRect(x + 17, y + 2, 6, 1);
+    context.fillRect(x + 16, y + 3, 2, 1);
+    context.fillRect(x + 19, y + 3, 5, 1);
+    context.fillRect(x + 16, y + 4, 1, 1);
+    context.fillRect(x + 20, y + 4, 4, 1);
+    context.fillRect(x + 21, y + 5, 3, 1);
+    context.fillStyle = foodColorApple;
+    context.fillRect(x + 5, y + 8, 7, 1);
+    context.fillRect(x + 18, y + 8, 7, 1);
+    context.fillRect(x + 3, y + 9, 24, 1);
+    context.fillRect(x + 2, y + 10, 26, 1);
+    context.fillRect(x + 1, y + 11, 28, 1);
+    context.fillRect(x, y + 12, 30, 9);
+    context.fillRect(x + 1, y + 21, 28, 1);
+    context.fillRect(x + 2, y + 22, 26, 1);
+    context.fillRect(x + 3, y + 23, 24, 1);
+    context.fillRect(x + 4, y + 24, 22, 1);
+    context.fillRect(x + 5, y + 25, 20, 1);
+    context.fillRect(x + 6, y + 26, 18, 1);
+    context.fillRect(x + 7, y + 27, 16, 1);
+    context.fillRect(x + 8, y + 28, 14, 1);
+    context.fillRect(x + 9, y + 29, 12, 1);
+    context.fillRect(x + 10, y + 30, 4, 1);
+    context.fillRect(x + 16, y + 30, 4, 1);
+
+}
+
 function drawFood() {
-    context.fillStyle = foodColor;
-    context.fillRect(food.x, food.y, cellSize, cellSize);
+    drawApple(food.x, food.y);
 
     if (radioPortal.checked) {
-        context.fillRect(foodPortal.x, foodPortal.y, cellSize, cellSize);
+	drawApple(foodPortal.x, foodPortal.y);
     }
 }
 
