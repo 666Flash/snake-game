@@ -40,6 +40,7 @@ const initialSnake = [
     { x: cellSize, y: 60 },
     { x: 60, y: 60 },
 ];
+const initialWalls = [];
 let snake = JSON.parse(JSON.stringify(initialSnake));
 let snakeHead = {
     x: snake[0].x,
@@ -64,6 +65,13 @@ let interval;
 function drawBoard() {
     context.fillStyle = boardColor;
     context.fillRect(30, 30, boardWidth - cellSize, boardHeight - cellSize);
+
+     if (radioWalls.checked) {
+        context.fillStyle = wallsColorBrown;
+	for(let index = 0; index < initialWalls.length; index++) {
+            context.fillRect(initialWalls[index].x, initialWalls[index].y, 30, 30);
+	}
+     }
 }
 
 function drawWalls(color) {
@@ -95,6 +103,14 @@ function drawSnake() {
         //         return finishGame();
         //     }
         // }
+
+        if (radioWalls.checked && index === 0) {
+	   for(let index = 0; index < initialWalls.length; index++) {
+              if(initialWalls[index].x === snakeHead.x && initialWalls[index].y === snakeHead.y) {
+                 return finishGame();
+              }
+	   }
+        }
 
         if (index === 0) {
             context.fillStyle = snakeColorHead;
@@ -152,14 +168,6 @@ function getRandomCoords() {
     return Math.floor(Math.random() * (boardWidth / cellSize - 2) + 1) * cellSize;
 }
 
-function getRandomWalls() {
-    return Math.floor(Math.random() * 4);
-}
-
-function getRandomBrick() {
-    return Math.floor(Math.random() * (boardWidth / cellSize)) * cellSize;
-}
-
 function placeFood() {
     food.x = getRandomCoords();
     food.y = getRandomCoords();
@@ -195,22 +203,14 @@ function checkIfEat() {
             updateScore(score + 1);
 
             if (radioWalls.checked) {
-                randomWalls = getRandomWalls();
-                randomBrick = getRandomBrick();
+                randomBrickX = getRandomCoords();
+                randomBrickY = getRandomCoords();
                 context.fillStyle = wallsColorBrown;
-
-                if (randomWalls === 0) {
-                    context.fillRect(randomBrick, 0, 30, 30);
-                }
-                if (randomWalls === 1) {
-                    context.fillRect(boardWidth, randomBrick, 30, 30);;
-                }
-                if (randomWalls === 2) {
-                    context.fillRect(randomBrick, boardHeight, 30, 30);
-                }
-                if (randomWalls === 3) {
-                    context.fillRect(0, randomBrick, 30, 30);
-                }
+                context.fillRect(randomBrickX, randomBrickY, 30, 30);
+		initialWalls.push({
+		    x: randomBrickX,
+		    y: randomBrickY,
+		})
             }
 
             if (radioSpeed.checked) {
@@ -321,11 +321,7 @@ function startGame() {
         bestInfo.textContent = score
     }
 
-    if (radioWalls.checked) {
-        drawWalls(wallsColorWhite);
-    } else {
-        drawWalls(wallsColorBrown);
-    }
+    drawWalls(wallsColorBrown);
 
     snake = JSON.parse(JSON.stringify(initialSnake));
     snakeHead = {
