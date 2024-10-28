@@ -23,10 +23,10 @@ const boardColor = '#575757';
 const wallsColorBrown = '#a96a0e';
 const wallsColorWhite = '#f4f2f4';
 const snakeColorHead = '#b8b926';
-const snakeColorBody = '#f4f2f4';
-const foodColorBranch = '#ED7D31';
-const foodColorLeaflet = '#27865d';
-const foodColorApple = '#FF0000';
+const snakeColorYellow = '#FFFF00';
+const foodColorBrown = '#ED7D31';
+const foodColorGreen = '#00B050';
+const foodColorRed = '#FF0000';
 
 const cellSize = 30;
 const boardWidth = gameBoard.width - cellSize;
@@ -114,20 +114,20 @@ function drawSnake() {
 
         if (index === 0) {
             context.fillStyle = snakeColorHead;
+	    context.fillRect(snakePart.x, snakePart.y, cellSize, cellSize);
         } else {
-            context.fillStyle = snakeColorBody;
+            drawBodySnake(snakePart.x, snakePart.y);
         }
-        context.fillRect(snakePart.x, snakePart.y, cellSize, cellSize);
     }
 }
 
 function drawApple(x, y) {
-    context.fillStyle = foodColorBranch;
+    context.fillStyle = foodColorBrown;
     context.fillRect(x + 11, y, 2, 1);
     context.fillRect(x + 12, y + 1, 2, 1);
     context.fillRect(x + 13, y + 2, 2, 1);
     context.fillRect(x + 14, y + 3, 2, 5);
-    context.fillStyle = foodColorLeaflet;
+    context.fillStyle = foodColorGreen;
     context.fillRect(x + 19, y + 1, 3, 1);
     context.fillRect(x + 17, y + 2, 6, 1);
     context.fillRect(x + 16, y + 3, 2, 1);
@@ -135,7 +135,7 @@ function drawApple(x, y) {
     context.fillRect(x + 16, y + 4, 1, 1);
     context.fillRect(x + 20, y + 4, 4, 1);
     context.fillRect(x + 21, y + 5, 3, 1);
-    context.fillStyle = foodColorApple;
+    context.fillStyle = foodColorRed;
     context.fillRect(x + 5, y + 8, 7, 1);
     context.fillRect(x + 18, y + 8, 7, 1);
     context.fillRect(x + 3, y + 9, 24, 1);
@@ -153,7 +153,41 @@ function drawApple(x, y) {
     context.fillRect(x + 9, y + 29, 12, 1);
     context.fillRect(x + 10, y + 30, 4, 1);
     context.fillRect(x + 16, y + 30, 4, 1);
+}
 
+function drawBodySnake(x, y) {
+    context.fillStyle = foodColorGreen;
+    context.fillRect(x + 12, y + 1, 6, 30);
+    context.fillRect(x + 9, y + 2, 12, 28);
+    context.fillRect(x + 6, y + 3, 18, 26);
+    context.fillRect(x + 5, y + 4, 20, 24);
+    context.fillRect(x + 4, y + 5, 22, 22);
+    context.fillRect(x + 3, y + 6, 24, 20);
+    context.fillRect(x + 2, y + 7, 26, 18);
+    context.fillRect(x + 1, y + 10, 28, 12);
+    context.fillRect(x, y + 13, 30, 6);
+    context.fillStyle = snakeColorYellow;
+    context.fillRect(x + 14, y + 3, 2, 26);
+    context.fillRect(x + 13, y + 4, 4, 24);
+    context.fillRect(x + 12, y + 5, 6, 22);
+    context.fillRect(x + 7, y + 6, 16, 20);
+    context.fillRect(x + 6, y + 7, 18, 18);
+    context.fillRect(x + 5, y + 8, 20, 16);
+    context.fillRect(x + 4, y + 13, 22, 6);
+    context.fillRect(x + 3, y + 14, 24, 4);
+    context.fillRect(x + 2, y + 15, 26, 2);
+    context.fillStyle = foodColorBrown;
+    context.fillRect(x + 14, y + 8, 2, 16);
+    context.fillRect(x + 12, y + 9, 6, 14);
+    context.fillRect(x + 11, y + 10, 8, 12);
+    context.fillRect(x + 10, y + 11, 10, 10);
+    context.fillRect(x + 9, y + 12, 12, 8);
+    context.fillRect(x + 8, y + 14, 14, 4);
+    context.fillRect(x + 7, y + 15, 16, 2);
+    context.fillStyle = foodColorRed;
+    context.fillRect(x + 14, y + 13, 2, 6);
+    context.fillRect(x + 13, y + 14, 4, 4);
+    context.fillRect(x + 12, y + 15, 6, 2);
 }
 
 function drawFood() {
