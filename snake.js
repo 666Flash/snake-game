@@ -22,11 +22,11 @@ const context = gameBoard.getContext("2d");
 const boardColor = '#575757';
 const wallsColorBrown = '#a96a0e';
 const wallsColorWhite = '#f4f2f4';
-const snakeColorHead = '#b8b926';
-const snakeColorYellow = '#FFFF00';
-const foodColorBrown = '#ED7D31';
-const foodColorGreen = '#00B050';
-const foodColorRed = '#FF0000';
+const colorBlack = '#000000';
+const colorYellow = '#FFFF00';
+const colorBrown = '#ED7D31';
+const colorGreen = '#00B050';
+const colorRed = '#FF0000';
 
 const cellSize = 30;
 const boardWidth = gameBoard.width - cellSize;
@@ -35,12 +35,20 @@ const boardHeight = gameBoard.height - cellSize;
 let speed = 400;
 let randomWalls = 0;
 let randomBrick = 0;
+let isMovement = 2;
+
+const massColorBodiSnake = [
+    colorYellow,
+    colorBrown,
+    colorGreen,
+    colorRed,
+];
 
 const initialSnake = [
     { x: cellSize, y: 60 },
     { x: 60, y: 60 },
 ];
-const initialWalls = [];
+
 let snake = JSON.parse(JSON.stringify(initialSnake));
 let snakeHead = {
     x: snake[0].x,
@@ -113,8 +121,15 @@ function drawSnake() {
         }
 
         if (index === 0) {
-            context.fillStyle = snakeColorHead;
-	    context.fillRect(snakePart.x, snakePart.y, cellSize, cellSize);
+	    if(isMovement === 1) {
+		drawHeadSnakeUp(snakePart.x, snakePart.y);
+	    } else if(isMovement === 2) {
+		drawHeadSnakeRight(snakePart.x, snakePart.y);
+	    } else if(isMovement === 3) {
+		drawHeadSnakeDown(snakePart.x, snakePart.y);
+	    } else if(isMovement === 4) {
+		drawHeadSnakeLeft(snakePart.x, snakePart.y);
+	    }
         } else {
             drawBodySnake(snakePart.x, snakePart.y);
         }
@@ -122,12 +137,12 @@ function drawSnake() {
 }
 
 function drawApple(x, y) {
-    context.fillStyle = foodColorBrown;
+    context.fillStyle = colorBrown;
     context.fillRect(x + 11, y, 2, 1);
     context.fillRect(x + 12, y + 1, 2, 1);
     context.fillRect(x + 13, y + 2, 2, 1);
     context.fillRect(x + 14, y + 3, 2, 5);
-    context.fillStyle = foodColorGreen;
+    context.fillStyle = colorGreen;
     context.fillRect(x + 19, y + 1, 3, 1);
     context.fillRect(x + 17, y + 2, 6, 1);
     context.fillRect(x + 16, y + 3, 2, 1);
@@ -135,7 +150,7 @@ function drawApple(x, y) {
     context.fillRect(x + 16, y + 4, 1, 1);
     context.fillRect(x + 20, y + 4, 4, 1);
     context.fillRect(x + 21, y + 5, 3, 1);
-    context.fillStyle = foodColorRed;
+    context.fillStyle = colorRed;
     context.fillRect(x + 5, y + 8, 7, 1);
     context.fillRect(x + 18, y + 8, 7, 1);
     context.fillRect(x + 3, y + 9, 24, 1);
@@ -155,8 +170,123 @@ function drawApple(x, y) {
     context.fillRect(x + 16, y + 30, 4, 1);
 }
 
+function drawHeadSnakeUp(x, y) {
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 9, y, 12, 1);
+    context.fillRect(x + 8, y + 1, 14, 1);
+    context.fillRect(x + 7, y + 2, 16, 28);
+    context.fillRect(x + 6, y + 3, 18, 26);
+    context.fillRect(x + 5, y + 4, 20, 22);
+    context.fillRect(x + 4, y + 6, 22, 20);
+    context.fillRect(x + 3, y + 7, 24, 18);
+    context.fillRect(x + 2, y + 9, 26, 18);
+    context.fillRect(x + 1, y + 11, 28, 14);
+    context.fillRect(x, y + 12, 30, 12);
+    context.fillStyle = colorGreen;
+    context.fillRect(x + 11, y + 5, 8, 22);
+    context.fillRect(x + 10, y + 6, 10, 21);
+    context.fillRect(x + 9, y + 8, 12, 18);
+    context.fillRect(x + 8, y + 10, 14, 15);
+    context.fillRect(x + 7, y + 11, 16, 14);
+    context.fillRect(x + 6, y + 12, 18, 13);
+    context.fillRect(x + 5, y + 14, 20, 10);
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 7, y + 15, 3, 3);
+    context.fillRect(x + 20, y + 15, 3, 3);
+    context.fillStyle = colorRed;
+    context.fillRect(x + 12, y, 2, 2);
+    context.fillRect(x + 16, y, 2, 2);
+    context.fillRect(x + 13, y + 2, 4, 2);
+}
+
+
+function drawHeadSnakeRight(x, y) {
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 5, y, 12, 30);
+    context.fillRect(x + 4, y + 1, 15, 28);
+    context.fillRect(x + 3, y + 2, 18, 26);
+    context.fillRect(x + 2, y + 3, 20, 24);
+    context.fillRect(x + 1, y + 4, 25, 22);
+    context.fillRect(x + 1, y + 5, 23, 22);
+    context.fillRect(x, y + 6, 28, 18);
+    context.fillRect(x, y + 7, 29, 16);
+    context.fillRect(x, y + 8, 30, 12);
+    context.fillStyle = colorGreen;
+    context.fillRect(x + 5, y + 5, 11, 20);
+    context.fillRect(x + 4, y + 6, 14, 18);
+    context.fillRect(x + 4, y + 7, 15, 16);
+    context.fillRect(x + 3, y + 8, 17, 14);
+    context.fillRect(x + 3, y + 9, 19, 12);
+    context.fillRect(x + 3, y + 10, 22, 10);
+    context.fillRect(x + 2, y + 11, 23, 8);
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 13, y + 6, 3, 3);
+    context.fillRect(x + 13, y + 19, 3, 3);
+    context.fillStyle = colorRed;
+    context.fillRect(x + 28, y + 12, 2, 2);
+    context.fillRect(x + 26, y + 13, 2, 4);
+    context.fillRect(x + 28, y + 16, 2, 2);
+}
+
+function drawHeadSnakeDown(x, y) {
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 9, y, 12, 30);
+    context.fillRect(x + 8, y, 14, 29);
+    context.fillRect(x + 7, y, 16, 28);
+    context.fillRect(x + 5, y + 1, 20, 24);
+    context.fillRect(x + 4, y + 2, 22, 20);
+    context.fillRect(x + 3, y + 3, 24, 18);
+    context.fillRect(x + 2, y + 4, 26, 16);
+    context.fillRect(x + 1, y + 5, 28, 14);
+    context.fillRect(x, y + 6, 30, 12);
+    context.fillStyle = colorGreen;
+    context.fillRect(x + 10, y + 2, 8, 23);
+    context.fillRect(x + 9, y + 2, 10, 22);
+    context.fillRect(x + 8, y + 3, 12, 19);
+    context.fillRect(x + 7, y + 3, 14, 17);
+    context.fillRect(x + 6, y + 4, 16, 15);
+    context.fillRect(x + 5, y + 4, 18, 14);
+    context.fillRect(x + 4, y + 7, 20, 11);
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 6, y + 12, 3, 3);
+    context.fillRect(x + 19, y + 12, 3, 3);
+    context.fillStyle = colorRed;
+    context.fillRect(x + 12, y + 26, 4, 2);
+    context.fillRect(x + 11, y + 28, 2, 2);
+    context.fillRect(x + 15, y + 28, 2, 2);
+}
+
+function drawHeadSnakeLeft(x, y) {
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 11, y, 12, 30);
+    context.fillRect(x + 9, y + 1, 15, 28);
+    context.fillRect(x + 7, y + 2, 18, 26);
+    context.fillRect(x + 6, y + 3, 20, 22);
+    context.fillRect(x + 5, y + 4, 22, 20);
+    context.fillRect(x + 3, y + 5, 25, 18);
+    context.fillRect(x + 2, y + 6, 26, 16);
+    context.fillRect(x + 1, y + 7, 28, 14);
+    context.fillRect(x, y + 8, 30, 12);
+    context.fillStyle = colorGreen;
+    context.fillRect(x + 12, y + 4, 11, 20);
+    context.fillRect(x + 10, y + 5, 14, 18);
+    context.fillRect(x + 9, y + 6, 15, 16);
+    context.fillRect(x + 8, y + 7, 17, 14);
+    context.fillRect(x + 6, y + 8, 19, 12);
+    context.fillRect(x + 4, y + 9, 21, 10);
+    context.fillRect(x + 3, y + 10, 22, 8);
+    context.fillStyle = colorBlack;
+    context.fillRect(x + 13, y + 6, 3, 3);
+    context.fillRect(x + 13, y + 19, 3, 3);
+    context.fillStyle = colorRed;
+    context.fillRect(x, y + 12, 2, 2);
+    context.fillRect(x + 2, y + 13, 2, 4);
+    context.fillRect(x, y + 16, 2, 2);
+}
+
 function drawBodySnake(x, y) {
-    context.fillStyle = foodColorGreen;
+    //context.fillStyle = colorGreen;
+    context.fillStyle = massColorBodiSnake[getRandomColor()];
     context.fillRect(x + 12, y + 1, 6, 30);
     context.fillRect(x + 9, y + 2, 12, 28);
     context.fillRect(x + 6, y + 3, 18, 26);
@@ -166,7 +296,8 @@ function drawBodySnake(x, y) {
     context.fillRect(x + 2, y + 7, 26, 18);
     context.fillRect(x + 1, y + 10, 28, 12);
     context.fillRect(x, y + 13, 30, 6);
-    context.fillStyle = snakeColorYellow;
+//    context.fillStyle = colorYellow;
+    context.fillStyle = massColorBodiSnake[getRandomColor()];
     context.fillRect(x + 14, y + 3, 2, 26);
     context.fillRect(x + 13, y + 4, 4, 24);
     context.fillRect(x + 12, y + 5, 6, 22);
@@ -176,7 +307,8 @@ function drawBodySnake(x, y) {
     context.fillRect(x + 4, y + 13, 22, 6);
     context.fillRect(x + 3, y + 14, 24, 4);
     context.fillRect(x + 2, y + 15, 26, 2);
-    context.fillStyle = foodColorBrown;
+//    context.fillStyle = colorBrown;
+    context.fillStyle = massColorBodiSnake[getRandomColor()];
     context.fillRect(x + 14, y + 8, 2, 16);
     context.fillRect(x + 12, y + 9, 6, 14);
     context.fillRect(x + 11, y + 10, 8, 12);
@@ -184,7 +316,8 @@ function drawBodySnake(x, y) {
     context.fillRect(x + 9, y + 12, 12, 8);
     context.fillRect(x + 8, y + 14, 14, 4);
     context.fillRect(x + 7, y + 15, 16, 2);
-    context.fillStyle = foodColorRed;
+//    context.fillStyle = colorRed;
+    context.fillStyle = massColorBodiSnake[getRandomColor()];
     context.fillRect(x + 14, y + 13, 2, 6);
     context.fillRect(x + 13, y + 14, 4, 4);
     context.fillRect(x + 12, y + 15, 6, 2);
@@ -200,6 +333,10 @@ function drawFood() {
 
 function getRandomCoords() {
     return Math.floor(Math.random() * (boardWidth / cellSize - 2) + 1) * cellSize;
+}
+
+function getRandomColor() {
+    return Math.floor(Math.random() * 4);
 }
 
 function placeFood() {
@@ -291,15 +428,19 @@ function changeDirection(ev) {
     if(ev.key === "ArrowRight" && !isGoingLeft) {
         velocity.x = cellSize;
         velocity.y = 0;
+	isMovement = 2;
     } else if(ev.key === "ArrowLeft" && !isGoingRight) {
         velocity.x = -cellSize;
         velocity.y = 0;
+	isMovement = 4;
     } else if(ev.key === "ArrowUp" && !isGoingDown) {
         velocity.x = 0;
         velocity.y = -cellSize;
+	isMovement = 1;
     } else if(ev.key === "ArrowDown" && !isGoingUp) {
         velocity.x = 0;
         velocity.y = cellSize;
+	isMovement = 3;
     }
 }
 
@@ -390,7 +531,3 @@ function menuGame() {
 }
 
 window.addEventListener("load", menuGame);
-
-
-
-
